@@ -11,3 +11,9 @@
 *.lai
 *.la
 *.a
+
+# VS Files
+#SQL Server Compact Database File
+*.sdf
+#TLOG File
+*.tlog
