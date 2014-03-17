@@ -9,7 +9,9 @@ class GameManager
 public:
 	GameManager(void);
 	virtual ~GameManager(void);
-	
+	bool moveUp, moveDown, moveLeft, moveRight, fireWeapon;
+	float playerX, playerY, zTime; // Co-ordinates of the player and Z position of world
+
 	// game state enum
 	enum GAMESTATE 
 	{ 
@@ -21,7 +23,7 @@ public:
 		CHANGE_STAGE,	// after completing the current stage, trigger and move to next stage (if applicable)
 		WAVE_OVER,		// show deathstar explosion, inform player next wave is starting
 		GAME_OVER,		// display game over screen, return to main on key press
-		STATE_MAX
+		STATE_SIZE
 	};
 
 	enum STAGE
@@ -29,7 +31,7 @@ public:
 		FIGHTERS_STAGE,	// approaching deathstar, dog fight with fighters
 		SURFACE_STAGE,	// moving along surface, towers collidable and shoot at player
 		TRENCH_STAGE,	// flying through trench towards exhaust port
-		STAGE_MAX
+		STAGE_SIZE
 	};
 		
 	
@@ -42,8 +44,14 @@ public:
 	void DrawVisuals();
 	// will return true if the wave is over, else will increment to next stage and return false
 	bool IsWaveOver();
-
+	// tell object factory to setup the next stage
+	void SetupStage(STAGE _nextStage);
 private:
+	
+	// integer array storing map boundaries for each stage
+	int stageBoundaries[STAGE_SIZE][2];
+	// check key flags for movement
+	void CheckFlags();
 	// current state of game logic
 	GAMESTATE gameState;
 	// the current stage the player is on

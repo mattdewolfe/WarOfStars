@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 
+#include "GameLogic.h"
 #include "openGL/glut.h"
 
 #define PI 3.14159265
@@ -10,8 +11,9 @@
 static int animationPeriod = 33; // Time between draw calls
 static long font = (long)GLUT_BITMAP_8_BY_13; // Font selection
 static int width, height; // Size of the OpenGL window
-static float playerX = 0, playerY = 0; // Co-ordinates of the player
-static float zTime = -1.0f; // position of map, as it scolls towards palyer
+
+static GameManager gameManager;
+
 // Routine to output interaction instructions to the C++ window.
 void printInteraction(void)
 {
@@ -29,8 +31,6 @@ void setup(void)
 {
    glEnable(GL_DEPTH_TEST);
    glClearColor (0.0, 0.0, 0.0, 0.0);
-   playerX = width/2;
-   playerY = height/2;
 }
 /*
 // Function to check if two spheres centered at (x1,y1,z1) and (x2,y2,z2) with
@@ -65,13 +65,11 @@ void drawScene(void)
 {  
 	int i, j;
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Begin left viewport
-//	glViewport (0, 0, width,  height); 
 	glLoadIdentity();
-	glRasterPos3f(3.0, 98.0f, zTime - 1.0f);
+	gameManager.DrawVisuals();
+/*	glRasterPos3f(3.0, 98.0f, zTime - 1.0f);
 	writeBitmapString((void*)font, "Star Wars");
-	glTranslatef(playerX, playerY, zTime);
+	
 	// Write text in isolated (i.e., before gluLookAt) translate block.
 	glPushMatrix();
 	glColor3f(1.0, 0.0, 0.0);
@@ -80,7 +78,7 @@ void drawScene(void)
 		glVertex3f(0.0f, 40.0f, 0);
 	glEnd();
 
-	glPopMatrix();
+	glPopMatrix();*/
 //	gluLookAt(width/2, height/2, -0.1, width/2, height/2, zTime, 0.0, 1.0, 0.0);
 	glutSwapBuffers();
 }
@@ -114,11 +112,53 @@ void keyInput(unsigned char key, int x, int y)
 // Callback routine for non-ASCII key entry
 void specialKeyInput(int key, int x, int y)
 {
-	if (key == GLUT_KEY_LEFT) { playerX -= 1.0f; }
-	if (key == GLUT_KEY_RIGHT) { playerX += 1.0f;}
-	if (key == GLUT_KEY_UP) { playerY += 1.0f; }
-	if (key == GLUT_KEY_DOWN){playerY -= 1.0f; }
+	if (key == GLUT_KEY_LEFT) 
+	{ 
+		if (gameManager.moveLeft == false)
+			gameManager.moveLeft = true;
+	}
+	if (key == GLUT_KEY_RIGHT) 
+	{ 
+		if (gameManager.moveRight == false)
+			gameManager.moveRight = true;
+	}
+		if (key == GLUT_KEY_DOWN) 
+	{ 
+		if (gameManager.moveDown == false)
+			gameManager.moveDown = true;
+	}
+	if (key == GLUT_KEY_UP) 
+	{ 
+		if (gameManager.moveUp == false)
+			gameManager.moveUp = true;
+	}
 }
+
+// Callback routine for non-ASCII key release
+void specialKeyUp(int key, int x, int y)
+{
+	if (key == GLUT_KEY_LEFT) 
+	{ 
+		if (gameManager.moveLeft == true)
+			gameManager.moveLeft = false;
+	}
+	if (key == GLUT_KEY_RIGHT) 
+	{ 
+		if (gameManager.moveRight == true)
+			gameManager.moveRight = false;
+	}
+		if (key == GLUT_KEY_DOWN) 
+	{ 
+		if (gameManager.moveDown == true)
+			gameManager.moveDown = false;
+	}
+	if (key == GLUT_KEY_UP) 
+	{ 
+		if (gameManager.moveUp == true)
+			gameManager.moveUp = false;
+	}
+}
+
 // animation timer
 void animate(int value)
 {
@@ -126,8 +166,7 @@ void animate(int value)
 	glutTimerFunc(animationPeriod, animate, 1);
 }
 
-
-// Main routine.
+// Main routine
 int main(int argc, char **argv) 
 {
 	printInteraction();
@@ -141,6 +180,7 @@ int main(int argc, char **argv)
 	glutReshapeFunc(resize);  
 	glutKeyboardFunc(keyInput);
 	glutSpecialFunc(specialKeyInput);
+	glutSpecialUpFunc(specialKeyUp);
 	glutTimerFunc(animationPeriod, animate, 1);
 	glutMainLoop(); 
 	return 0;  

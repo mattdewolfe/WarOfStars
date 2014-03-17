@@ -13,20 +13,14 @@ void HUD::Draw(int _stage)
 
 void HUD::DrawWeapons()
 {
-	std::cout << "hud draw\n";
 	glColor3f(0.0, 0.8, 0.0);
-	for (int i = 0; i < 2; i++)
-	{
-		glPushMatrix();
-		glTranslatef(100, 50, -2);
+	glPushMatrix();
+		glTranslatef(0, 0, -5.0f);
 		glBegin(GL_LINE_STRIP);
-			glVertex3f(4, 6, 2);
-			glVertex3f(0, 3, 0);
-			glVertex3f(0, 2, 0);
-			glVertex3f(4, 0, 2);
+		glVertex3f(0, 190, 0);
+		glVertex3f(190, 190, 0);
 		glEnd();
-		glPopMatrix();
-	}	
+	glPopMatrix();	
 }
 // routine to draw a bitmap character string
 void HUD::WriteBitmapString(void *font, char *string)
@@ -43,7 +37,7 @@ void HUD::FloatToString(char * destStr, int precision, int val)
 // write standard text for ui elements
 void HUD::WriteData(int _stage)
 {
-	glRasterPos3f(GLUT_SCREEN_WIDTH - 50, GLUT_SCREEN_HEIGHT - 6, -1);
+	glRasterPos3f(GLUT_SCREEN_WIDTH/8 , 240.0f, -5.0f);
 	WriteBitmapString((void*)hudFont, "SCORE: ");
 	/*	floatToString(hudStringBuffer, 8, playerScore->GetScore());
 		glRasterPos3f(screenWidth - 50, screenHeight - 6, 0);

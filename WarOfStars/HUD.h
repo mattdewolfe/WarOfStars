@@ -2,7 +2,7 @@
 #define HUD_H
 #include <stdlib.h>
 #include <iostream>
-#include "glut.h"
+#include "openGL\glut.h"
 
 class HUD
 {

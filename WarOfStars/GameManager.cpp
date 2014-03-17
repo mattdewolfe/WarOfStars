@@ -4,12 +4,25 @@ GameManager::GameManager()
 {
 	gameState = PLAY_GAME;
 	stage = SURFACE_STAGE;
+	playerX = 0;
+	playerY = 0;
+	zTime = -1.0f;
+	moveUp = false;
+	moveDown = false;
+	moveLeft = false;
+	moveRight = false;
+	fireWeapon = false;
+	stageBoundaries[FIGHTERS_STAGE][0] = 300;
+	stageBoundaries[FIGHTERS_STAGE][1] = 150;
+	stageBoundaries[SURFACE_STAGE][0] = 200;
+	stageBoundaries[SURFACE_STAGE][1] = 150;
+	stageBoundaries[TRENCH_STAGE][0] = 100;
+	stageBoundaries[TRENCH_STAGE][1] = 150;
 }
-
-
 // main draw statement here - switch based on gamestate and draw elements as needed
 void GameManager::DrawVisuals()
 {
+	CheckFlags();
 	switch(gameState)
 	{
 	case MAIN_MENU:
@@ -21,7 +34,10 @@ void GameManager::DrawVisuals()
 		break;
 	case PLAY_GAME:
 		hud.Draw(stage);
-		objectFactory.DrawAll();
+		glPushMatrix();	
+			glTranslatef(playerX, playerY, zTime);
+			objectFactory.DrawAll();
+		glPopMatrix();
 		break;
 	case PLAYER_KILLED:
 		hud.Draw(stage);
@@ -35,7 +51,6 @@ void GameManager::DrawVisuals()
 		break;
 	}
 }
-
 // check if the wave is over, will move to next stage and return false if it is not
 bool GameManager::IsWaveOver()
 {
@@ -59,6 +74,42 @@ bool GameManager::IsWaveOver()
 		return false;
 	}
 	return false;
+}
+// check movement flags and change values as needed
+void GameManager::CheckFlags()
+{
+	if (moveLeft == true && playerX > 0)
+	{
+		playerX -= 1.0f;
+	}
+	if (moveRight == true && playerX < stageBoundaries[stage][0])
+	{
+		playerX += 1.0f;
+	}
+	if (moveDown == true && playerY > 0)
+	{
+		playerY -= 1.0f;
+	}
+	if (moveUp == true && playerY < stageBoundaries[stage][0])
+	{
+		playerY += 1.0f;
+	}
+}
+// tell object factory to setup next stage
+void GameManager::SetupStage(STAGE _nextStage)
+{
+	switch (_nextStage)
+	{
+	case FIGHTERS_STAGE:
+		// objectFactory.SetupFighterStage();
+		break;
+	case SURFACE_STAGE:
+		// objectFactory.SetupSurfaceStage();
+		break;
+	case TRENCH_STAGE:
+		// objectFactory.SetupTrenchStage();
+		break;
+	}
 }
 GameManager::~GameManager()
 {

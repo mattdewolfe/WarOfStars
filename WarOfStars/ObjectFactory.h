@@ -1,8 +1,10 @@
 #ifndef OBJECT FACTORY_H
 #define OBJECT_FACTORY_H
 #include <vector>
+#include "openGL\glut.h"
 #include "GameObject.h"
-
+// #include "TieFighter.h"
+// #include "Tower.h"
 class ObjectFactory
 {
 private:
@@ -22,6 +24,12 @@ public:
 		{
 			it->Draw();
 		}
+		glColor3f(0.8, 0.0, 0.0);
+		glBegin(GL_TRIANGLE_STRIP);
+			glVertex3f(5.0, 5.0, 0);
+			glVertex3f(10.0, 5.0, 0);
+			glVertex3f(5.0, 10.0, 0);
+		glEnd();
 	}
 	// remove an object
 	void RemoveObject(GameObject _deleteObject)
@@ -33,6 +41,21 @@ public:
 				break;
 		}
 		objects.erase(objects.begin() + i);
+	}
+	// load objects for fighter stage
+	void SetupFighterStage()
+	{
+
+	}
+	// load objects for surface stage
+	void SetupSurfaceStage()
+	{
+
+	}
+	// load objects for trench stage
+	void SetupTrenchStage()
+	{
+
 	}
 	virtual ~ObjectFactory(void) {}
 
