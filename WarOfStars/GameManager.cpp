@@ -30,20 +30,20 @@ void GameManager::DrawVisuals()
 	case START_GAME:
 		break;
 	case START_WAVE:
-		hud.Draw(stage);
+		hud.Draw();
 		break;
 	case PLAY_GAME:
-		hud.Draw(stage);
+		hud.Draw();
 		glPushMatrix();	
 			glTranslatef(playerX, playerY, zTime);
 			objectFactory.DrawAll();
 		glPopMatrix();
 		break;
 	case PLAYER_KILLED:
-		hud.Draw(stage);
+		hud.Draw();
 		break;
 	case CHANGE_STAGE:
-		hud.Draw(stage);
+		hud.Draw();
 		break;
 	case WAVE_OVER:
 		break;
