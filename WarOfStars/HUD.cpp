@@ -7,8 +7,10 @@ HUD::HUD(void)
 
 void HUD::Draw()
 {
+	glPushMatrix();
 	WriteData();
 	DrawWeapons();
+	glPopMatrix();
 }
 
 void HUD::DrawWeapons()
@@ -224,6 +226,7 @@ void HUD::FloatToString(char * destStr, int precision, int val)
 // write standard text for ui elements
 void HUD::WriteData()
 {
+	glColor3f(1.0, 0, 0);
 	glRasterPos3f(GLUT_SCREEN_WIDTH/8 , 245.0f, -5.0f);
 	WriteBitmapString((void*)hudFont, "SCORE ");
 	/*	floatToString(hudStringBuffer, 8, playerScore->GetScore());

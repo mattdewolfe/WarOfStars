@@ -46,6 +46,8 @@ public:
 	bool IsWaveOver();
 	// tell object factory to setup the next stage
 	void SetupStage(STAGE _nextStage);
+	// increment game state
+	void Update();
 private:
 	
 	// integer array storing map boundaries for each stage

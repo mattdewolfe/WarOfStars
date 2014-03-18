@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "GameLogic.h"
+#include "TieFighter.h"
 #include "openGL/glut.h"
 
 #define PI 3.14159265
@@ -11,9 +12,10 @@
 static int animationPeriod = 33; // Time between draw calls
 static long font = (long)GLUT_BITMAP_8_BY_13; // Font selection
 static int width, height; // Size of the OpenGL window
+float mouseX, mouseY;
 
 static GameManager gameManager;
-
+TieFighter tie(10, 10, -5);
 // Routine to output interaction instructions to the C++ window.
 void printInteraction(void)
 {
@@ -30,8 +32,168 @@ void writeBitmapString(void *font, char *string)
 void setup(void) 
 {
    glEnable(GL_DEPTH_TEST);
+   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    glClearColor (0.0, 0.0, 0.0, 0.0);
 }
+
+void DrawCrossHair()
+{
+	glPushMatrix();
+		glColor3f(0.0, 0.3, 0.6);
+		glTranslatef(mouseX, mouseY, -4.0f);
+		glBegin(GL_TRIANGLE_FAN);
+		glVertex3f(0, 0, 0);
+		glVertex3f(2, 2, 0);
+		glVertex3f(2, -2, 0);
+		glVertex3f(-2, -2, 0);
+		glVertex3f(-2, 2, 0);
+		glVertex3f(2, 2, 0);
+		glEnd();
+	glPopMatrix();
+}
+
+// Drawing routine
+void drawScene(void)
+{  
+	int i, j;
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	gameManager.DrawVisuals();
+	DrawCrossHair();
+	glPushMatrix();
+		glTranslatef(120, 100, gameManager.zTime);
+		tie.Draw();
+	glPopMatrix();
+	gameManager.Update();
+	glutSwapBuffers();
+}
+
+// OpenGL window reshape routine.
+void resize(int w, int h)
+{
+   glViewport (0, 0, (GLsizei)w, (GLsizei)h);
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   glFrustum(0.0, 50.0, 0.0, 50.0, 1.0, 1000.0);
+   glMatrixMode(GL_MODELVIEW);
+   // Pass the size of the OpenGL window
+   width = w;
+   height = h;
+}
+// Mouse callback routine.
+void mouseControl(int button, int state, int x, int y)
+{
+ /*  // Store the clicked point in the currentPoint variable when left button is pressed.
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+   // Store the currentPoint in the points vector when left button is released.
+   if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+   if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)*/
+}
+// Mouse motion callback routine
+void mouseMotion(int x, int y)
+{
+//	std::cout << x/5.15 << "x " << y/3.84 << "y \n";
+}
+// Update mouse position regardless of button presses
+void passiveMotionFunc(int x, int y)
+{
+	std::cout << x/5.15 << "x " << y/3.84 << "y \n";
+	// convert mouse cursor position into screen coordinates
+	mouseX = x/5.15;
+	mouseY = y/3.84;
+}
+// Keyboard input processing routine
+void keyInput(unsigned char key, int x, int y)
+{
+   switch (key) 
+   {
+      case 27:
+         exit(0);
+         break;
+      default:
+         break;
+   }
+}
+// Callback routine for non-ASCII key entry
+void specialKeyInput(int key, int x, int y)
+{
+	if (key == GLUT_KEY_LEFT) 
+	{ 
+		if (gameManager.moveLeft == false)
+			gameManager.moveLeft = true;
+	}
+	if (key == GLUT_KEY_RIGHT) 
+	{ 
+		if (gameManager.moveRight == false)
+			gameManager.moveRight = true;
+	}
+		if (key == GLUT_KEY_DOWN) 
+	{ 
+		if (gameManager.moveDown == false)
+			gameManager.moveDown = true;
+	}
+	if (key == GLUT_KEY_UP) 
+	{ 
+		if (gameManager.moveUp == false)
+			gameManager.moveUp = true;
+	}
+}
+// Callback routine for non-ASCII key release
+void specialKeyUp(int key, int x, int y)
+{
+	if (key == GLUT_KEY_LEFT) 
+	{ 
+		if (gameManager.moveLeft == true)
+			gameManager.moveLeft = false;
+	}
+	if (key == GLUT_KEY_RIGHT) 
+	{ 
+		if (gameManager.moveRight == true)
+			gameManager.moveRight = false;
+	}
+		if (key == GLUT_KEY_DOWN) 
+	{ 
+		if (gameManager.moveDown == true)
+			gameManager.moveDown = false;
+	}
+	if (key == GLUT_KEY_UP) 
+	{ 
+		if (gameManager.moveUp == true)
+			gameManager.moveUp = false;
+	}
+}
+// animation timer
+void animate(int value)
+{
+ 	glutPostRedisplay();
+	glutTimerFunc(animationPeriod, animate, 1);
+}
+// Main routine
+int main(int argc, char **argv) 
+{
+	printInteraction();
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
+	glutInitWindowSize(1024, 768);
+	glutInitWindowPosition(250, 150); 
+	glutCreateWindow("War of Stars");
+	setup(); 
+	glutDisplayFunc(drawScene); 
+	glutReshapeFunc(resize);  
+	glutKeyboardFunc(keyInput);
+	glutSpecialFunc(specialKeyInput);
+	glutSpecialUpFunc(specialKeyUp);
+	// Mouse button push callback
+	glutMouseFunc(mouseControl); 
+	// Position of mouse cursor as dragged
+	glutMotionFunc(mouseMotion);
+	// Position of mouse cursor without clicks
+	glutPassiveMotionFunc(passiveMotionFunc);
+	glutTimerFunc(animationPeriod, animate, 1);
+	glutMainLoop(); 
+	return 0;  
+}
+
 /*
 // Function to check if two spheres centered at (x1,y1,z1) and (x2,y2,z2) with
 // radius r1 and r2 intersect.
@@ -59,130 +221,3 @@ int asteroidCraftCollision(float x, float z, float a)
 		       return 1;
    return 0;
 }*/
-
-// Drawing routine
-void drawScene(void)
-{  
-	int i, j;
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-	gameManager.DrawVisuals();
-/*	glRasterPos3f(3.0, 98.0f, zTime - 1.0f);
-	writeBitmapString((void*)font, "Star Wars");
-	
-	// Write text in isolated (i.e., before gluLookAt) translate block.
-	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
-	glBegin(GL_LINE_STRIP);
-		glVertex3f(0.0f, 0.0f, 0);
-		glVertex3f(0.0f, 40.0f, 0);
-	glEnd();
-
-	glPopMatrix();*/
-//	gluLookAt(width/2, height/2, -0.1, width/2, height/2, zTime, 0.0, 1.0, 0.0);
-	glutSwapBuffers();
-}
-
-// OpenGL window reshape routine.
-void resize(int w, int h)
-{
-   glViewport (0, 0, (GLsizei)w, (GLsizei)h);
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glFrustum(0.0, 50.0, 0.0, 50.0, 1.0, 200.0);
-   glMatrixMode(GL_MODELVIEW);
-   // Pass the size of the OpenGL window
-   width = w;
-   height = h;
-}
-
-// Keyboard input processing routine
-void keyInput(unsigned char key, int x, int y)
-{
-   switch (key) 
-   {
-      case 27:
-         exit(0);
-         break;
-      default:
-         break;
-   }
-}
-
-// Callback routine for non-ASCII key entry
-void specialKeyInput(int key, int x, int y)
-{
-	if (key == GLUT_KEY_LEFT) 
-	{ 
-		if (gameManager.moveLeft == false)
-			gameManager.moveLeft = true;
-	}
-	if (key == GLUT_KEY_RIGHT) 
-	{ 
-		if (gameManager.moveRight == false)
-			gameManager.moveRight = true;
-	}
-		if (key == GLUT_KEY_DOWN) 
-	{ 
-		if (gameManager.moveDown == false)
-			gameManager.moveDown = true;
-	}
-	if (key == GLUT_KEY_UP) 
-	{ 
-		if (gameManager.moveUp == false)
-			gameManager.moveUp = true;
-	}
-}
-
-// Callback routine for non-ASCII key release
-void specialKeyUp(int key, int x, int y)
-{
-	if (key == GLUT_KEY_LEFT) 
-	{ 
-		if (gameManager.moveLeft == true)
-			gameManager.moveLeft = false;
-	}
-	if (key == GLUT_KEY_RIGHT) 
-	{ 
-		if (gameManager.moveRight == true)
-			gameManager.moveRight = false;
-	}
-		if (key == GLUT_KEY_DOWN) 
-	{ 
-		if (gameManager.moveDown == true)
-			gameManager.moveDown = false;
-	}
-	if (key == GLUT_KEY_UP) 
-	{ 
-		if (gameManager.moveUp == true)
-			gameManager.moveUp = false;
-	}
-}
-
-// animation timer
-void animate(int value)
-{
- 	glutPostRedisplay();
-	glutTimerFunc(animationPeriod, animate, 1);
-}
-
-// Main routine
-int main(int argc, char **argv) 
-{
-	printInteraction();
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); 
-	glutInitWindowSize(1024, 768);
-	glutInitWindowPosition(250, 150); 
-	glutCreateWindow("War of Stars");
-	setup(); 
-	glutDisplayFunc(drawScene); 
-	glutReshapeFunc(resize);  
-	glutKeyboardFunc(keyInput);
-	glutSpecialFunc(specialKeyInput);
-	glutSpecialUpFunc(specialKeyUp);
-	glutTimerFunc(animationPeriod, animate, 1);
-	glutMainLoop(); 
-	return 0;  
-}
-

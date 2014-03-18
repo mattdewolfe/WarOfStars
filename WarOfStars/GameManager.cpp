@@ -111,6 +111,11 @@ void GameManager::SetupStage(STAGE _nextStage)
 		break;
 	}
 }
+// increments game logic/state
+void GameManager::Update()
+{
+	zTime += 0.01f;
+}
 GameManager::~GameManager()
 {
 

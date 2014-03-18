@@ -84,6 +84,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StaticObject.cpp" />
+    <ClCompile Include="TieFighter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSingleton.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="StaticObject.h" />
+    <ClInclude Include="TieFighter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
