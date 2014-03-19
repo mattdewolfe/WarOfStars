@@ -1,22 +1,15 @@
-﻿Build started 18/03/2014 4:34:48 PM.
-     1>Project "C:\Users\Matts\WarOfStars\WarOfStars\SpaceTravel.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         E:\Program Files\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt GameManager.cpp
-         GameManager.cpp
-     1>c:\users\matts\warofstars\warofstars\objectfactory.h(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\users\matts\warofstars\warofstars\objectfactory.h(38): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\matts\warofstars\warofstars\visualtext.h(40): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 e:\program files\vc\include\stdio.h(357) : see declaration of 'sprintf'
-       Link:
-         E:\Program Files\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Matts\WarOfStars\WarOfStars\Debug\WarOfStars.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Matts\WarOfStars\WarOfStars\Debug\WarOfStars.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Matts\WarOfStars\WarOfStars\Debug\WarOfStars.lib" /MACHINE:X86 Debug\GameManager.obj
+﻿Build started 3/19/2014 9:50:21 AM.
+     1>Project "C:\Users\mdewolfe\warofstars\WarOfStars\SpaceTravel.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.lib" /MACHINE:X86 Debug\GameManager.obj
          Debug\GameObject.obj
          Debug\HUD.obj
          Debug\main.obj
          Debug\StaticObject.obj
          Debug\TieFighter.obj
-         SpaceTravel.vcxproj -> C:\Users\Matts\WarOfStars\WarOfStars\Debug\WarOfStars.exe
-     1>Done Building Project "C:\Users\Matts\WarOfStars\WarOfStars\SpaceTravel.vcxproj" (Build target(s)).
+         SpaceTravel.vcxproj -> C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.exe
+     1>Done Building Project "C:\Users\mdewolfe\warofstars\WarOfStars\SpaceTravel.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.95
+Time Elapsed 00:00:00.29
