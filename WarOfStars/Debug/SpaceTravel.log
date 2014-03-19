@@ -1,10 +1,10 @@
-﻿Build started 3/19/2014 12:27:13 PM.
+﻿Build started 3/19/2014 2:42:46 PM.
      1>Project "C:\Users\100690885\warofstars\WarOfStars\SpaceTravel.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
      1>c:\users\100690885\warofstars\warofstars\objectfactory.h(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\users\100690885\warofstars\warofstars\objectfactory.h(38): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\100690885\warofstars\warofstars\objectfactory.h(39): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\100690885\warofstars\warofstars\visualtext.h(40): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
      1>c:\users\100690885\warofstars\warofstars\main.cpp(71): warning C4101: 'i' : unreferenced local variable
@@ -21,4 +21,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.22
+Time Elapsed 00:00:01.16

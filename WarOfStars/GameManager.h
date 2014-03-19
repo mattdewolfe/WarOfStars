@@ -44,6 +44,7 @@ public:
 		START_BUTTON,	// start game
 		HELP_BUTTON,	// help screen
 		QUIT_BUTTON,	// quit game
+		BACK_BUTTON,	// exit current screen
 		BUTTONS_SIZE
 	};
 	// used for menu buttons

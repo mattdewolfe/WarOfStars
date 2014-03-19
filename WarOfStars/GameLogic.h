@@ -1,9 +1,9 @@
 #ifndef GAMELOGIC_H
 #define GAMELOGIC_H
 
+// game manager should bring with it Score, Hud, ObjectFactory, and VisualText
 #include "GameManager.h"
 #include "GameObject.h"
-#include "HUD.h"
 #include "StaticObject.h"
 
 #endif

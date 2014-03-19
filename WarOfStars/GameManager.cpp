@@ -2,7 +2,7 @@
 
 GameManager::GameManager()
 {
-	gameState = MAIN_MENU;
+	gameState = PLAY_GAME;
 	stage = SURFACE_STAGE;
 	playerX = 0;
 	playerY = 0;
@@ -41,6 +41,12 @@ void GameManager::SetupButtons()
 	buttons[QUIT_BUTTON].x = 75;
 	buttons[QUIT_BUTTON].y = 22;
 	buttons[QUIT_BUTTON].text = "I quit";
+
+	buttons[BACK_BUTTON].height = 15;
+	buttons[BACK_BUTTON].width = 35;
+	buttons[BACK_BUTTON].x = 80;
+	buttons[BACK_BUTTON].y = 10;
+	buttons[BACK_BUTTON].text = "back";
 }
 // main draw statement here - switch based on gamestate and draw elements as needed
 void GameManager::DrawVisuals()
@@ -58,7 +64,7 @@ void GameManager::DrawVisuals()
 		visText.WriteBitmapString(6, 148, "War of Stars");
 		visText.ReSizeFont(7);
 		// iterate through and draw all buttons
-		for (int i = 0; i < BUTTONS_SIZE; i++)
+		for (int i = 0; i < BUTTONS_SIZE - 1; i++)
 		{
 			DrawButton((BUTTONS)i);
 		}
@@ -68,10 +74,44 @@ void GameManager::DrawVisuals()
 	case START_GAME:
 		break;
 	case HELP_SCREEN:
-#pragma region HelpScreenVisuals
+		#pragma region HelpScreenVisuals
 		glPushMatrix();
+		visText.ReSizeFont(19);
+		visText.SetColorFloatRGB(1.0, 0.0, 0.0);
+		visText.WriteBitmapString(6, 150, "War of Stars");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(6, 148, "War of Stars");
+		visText.ReSizeFont(8);
+		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
+		visText.WriteBitmapString(33, 110, "Use the mouse to aim");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(33, 109, "Use the mouse to aim");
+		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
+		visText.WriteBitmapString(24, 97, "and left click to fire");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(24, 96, "and left click to fire");
 
-#pragma endregion HelpScreenVisuals
+		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
+		visText.WriteBitmapString(10, 84, "Use the arrows to manuever!");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(10, 83, "Use the arrows to manuever!");
+		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
+		visText.WriteBitmapString(25, 65, "Fly across the surface");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(25, 64, "Fly across the surface");
+
+		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
+		visText.WriteBitmapString(25, 53, "and through the trench");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(25, 52, "and through the trench");
+		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
+		visText.WriteBitmapString(10, 41, "to destroy the exhaust port");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(10, 40, "to destroy the exhaust port");
+
+		DrawButton(BACK_BUTTON);
+		glPopMatrix();
+		#pragma endregion HelpScreenVisuals
 		break;
 	case START_WAVE:
 		hud.Draw();
@@ -167,7 +207,7 @@ void GameManager::MousePress(float _inX, float _inY)
 	{
 	case MAIN_MENU:
 		// menu movement
-		for (int i = 0; i < BUTTONS_SIZE; i++)
+		for (int i = 0; i < BUTTONS_SIZE - 1; i++)
 		{
 			if (_inX > buttons[(BUTTONS)i].x && _inX < buttons[(BUTTONS)i].x + buttons[(BUTTONS)i].width)
 				if (_inY > buttons[(BUTTONS)i].y && _inY < buttons[(BUTTONS)i].y + buttons[(BUTTONS)i].height)
@@ -184,6 +224,11 @@ void GameManager::MousePress(float _inX, float _inY)
 						break;
 					}
 		}
+		break;
+	case HELP_SCREEN:
+		if (_inX > buttons[BACK_BUTTON].x && _inX < buttons[BACK_BUTTON].x + buttons[BACK_BUTTON].width)
+				if (_inY > buttons[BACK_BUTTON].y && _inY < buttons[BACK_BUTTON].y + buttons[BACK_BUTTON].height)
+					gameState = MAIN_MENU;
 		break;
 	case PLAY_GAME:
 		// fire a laser
