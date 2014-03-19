@@ -3,6 +3,8 @@
 
 #include "ObjectFactory.h"
 #include "HUD.h"
+#include "Score.h"
+#include "VisualText.h"
 
 class GameManager
 {
@@ -11,7 +13,8 @@ public:
 	virtual ~GameManager(void);
 	bool moveUp, moveDown, moveLeft, moveRight, fireWeapon;
 	float playerX, playerY, zTime; // Co-ordinates of the player and Z position of world
-
+	// tracks player score
+	Score score;
 	// game state enum
 	enum GAMESTATE 
 	{ 
@@ -49,7 +52,8 @@ public:
 	// increment game state
 	void Update();
 private:
-	
+	// draw text to screen
+	VisualText visText;
 	// integer array storing map boundaries for each stage
 	int stageBoundaries[STAGE_SIZE][2];
 	// check key flags for movement

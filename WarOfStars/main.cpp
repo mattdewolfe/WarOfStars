@@ -15,7 +15,7 @@ static int width, height; // Size of the OpenGL window
 float mouseX, mouseY;
 
 static GameManager gameManager;
-TieFighter tie(10, 10, -5);
+TieFighter tie(25, 25, -50);
 // Routine to output interaction instructions to the C++ window.
 void printInteraction(void)
 {
@@ -60,8 +60,10 @@ void drawScene(void)
 	glLoadIdentity();
 	gameManager.DrawVisuals();
 	DrawCrossHair();
+	gluLookAt(0, 0, 0, 0, 0, -50, 0, 1, 0);
+	
 	glPushMatrix();
-		glTranslatef(120, 100, gameManager.zTime);
+		glTranslatef(0, 0, gameManager.zTime);
 		tie.Draw();
 	glPopMatrix();
 	gameManager.Update();
@@ -76,6 +78,7 @@ void resize(int w, int h)
    glLoadIdentity();
    glFrustum(0.0, 50.0, 0.0, 50.0, 1.0, 1000.0);
    glMatrixMode(GL_MODELVIEW);
+
    // Pass the size of the OpenGL window
    width = w;
    height = h;

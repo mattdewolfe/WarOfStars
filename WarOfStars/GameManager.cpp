@@ -2,7 +2,7 @@
 
 GameManager::GameManager()
 {
-	gameState = PLAY_GAME;
+	gameState = MAIN_MENU;
 	stage = SURFACE_STAGE;
 	playerX = 0;
 	playerY = 0;
@@ -25,8 +25,50 @@ void GameManager::DrawVisuals()
 	CheckFlags();
 	switch(gameState)
 	{
+#pragma region MainMenuVisuals
 	case MAIN_MENU:
+		glPushMatrix();
+			visText.SetColorFloatRGB(1.0, 0.0, 0.0);
+			visText.ReSizeFont(19);
+			visText.WriteBitmapString(6, 150, "War of Stars");
+			visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+			visText.WriteBitmapString(6, 148, "War of Stars");
+			visText.ReSizeFont(7);
+			visText.SetColorFloatRGB(0.8, 0.8, 0.8);
+			visText.WriteBitmapString(30, 75, "Assualt the death star!");
+			visText.WriteBitmapString(35, 50, "I need information...");
+			visText.WriteBitmapString(75, 25, "I quit");
+			visText.SetColorFloatRGB(1.0, 0.0, 0.0);
+			visText.WriteBitmapString(30, 74, "Assualt the death star!");
+			visText.WriteBitmapString(35, 49, "I need information...");
+			visText.WriteBitmapString(75, 24, "I quit");
+			glColor3f(0.0, 0.8, 0.1);
+			glLineWidth(2.0);
+			glBegin(GL_LINE_STRIP);
+			glVertex3f(25, 71, -4);
+			glVertex3f(170, 71, -4);
+			glVertex3f(170, 86, -4);
+			glVertex3f(25, 86, -4);
+			glVertex3f(25, 71, -4);
+			glEnd();
+			glBegin(GL_LINE_STRIP);
+			glVertex3f(25, 46, -4);
+			glVertex3f(170, 46, -4);
+			glVertex3f(170, 61, -4);
+			glVertex3f(25, 61, -4);
+			glVertex3f(25, 46, -4);
+			glEnd();
+			glBegin(GL_LINE_STRIP);
+			glVertex3f(70, 22, -4);
+			glVertex3f(115, 22, -4);
+			glVertex3f(115, 36, -4);
+			glVertex3f(70, 36, -4);
+			glVertex3f(70, 22, -4);
+			glEnd();
+			glLineWidth(1.0);
+		glPopMatrix();
 		break;
+#pragma endregion MainMenuVisuals
 	case START_GAME:
 		break;
 	case START_WAVE:

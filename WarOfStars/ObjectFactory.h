@@ -26,9 +26,9 @@ public:
 		}
 		glColor3f(0.8, 0.0, 0.0);
 		glBegin(GL_TRIANGLE_STRIP);
-			glVertex3f(5.0, 5.0, 0);
-			glVertex3f(10.0, 5.0, 0);
-			glVertex3f(5.0, 10.0, 0);
+			glVertex3f(5.0, 5.0, -4);
+			glVertex3f(10.0, 5.0, -4);
+			glVertex3f(5.0, 10.0, -4);
 		glEnd();
 	}
 	// remove an object
