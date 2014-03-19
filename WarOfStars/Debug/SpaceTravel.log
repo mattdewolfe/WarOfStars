@@ -1,15 +1,24 @@
-﻿Build started 3/19/2014 9:50:21 AM.
-     1>Project "C:\Users\mdewolfe\warofstars\WarOfStars\SpaceTravel.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.lib" /MACHINE:X86 Debug\GameManager.obj
+﻿Build started 3/19/2014 12:27:13 PM.
+     1>Project "C:\Users\100690885\warofstars\WarOfStars\SpaceTravel.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\100690885\warofstars\warofstars\objectfactory.h(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\100690885\warofstars\warofstars\objectfactory.h(38): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\100690885\warofstars\warofstars\visualtext.h(40): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
+     1>c:\users\100690885\warofstars\warofstars\main.cpp(71): warning C4101: 'i' : unreferenced local variable
+     1>c:\users\100690885\warofstars\warofstars\main.cpp(71): warning C4101: 'j' : unreferenced local variable
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\100690885\warofstars\WarOfStars\Debug\WarOfStars.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\100690885\warofstars\WarOfStars\Debug\WarOfStars.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\100690885\warofstars\WarOfStars\Debug\WarOfStars.lib" /MACHINE:X86 Debug\GameManager.obj
          Debug\GameObject.obj
          Debug\HUD.obj
          Debug\main.obj
          Debug\StaticObject.obj
          Debug\TieFighter.obj
-         SpaceTravel.vcxproj -> C:\Users\mdewolfe\warofstars\WarOfStars\Debug\WarOfStars.exe
-     1>Done Building Project "C:\Users\mdewolfe\warofstars\WarOfStars\SpaceTravel.vcxproj" (Build target(s)).
+         SpaceTravel.vcxproj -> C:\Users\100690885\warofstars\WarOfStars\Debug\WarOfStars.exe
+     1>Done Building Project "C:\Users\100690885\warofstars\WarOfStars\SpaceTravel.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.29
+Time Elapsed 00:00:01.22

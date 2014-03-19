@@ -20,6 +20,7 @@ public:
 	{ 
 		MAIN_MENU,		// main menu
 		START_GAME,		// load resources, start a new game
+		HELP_SCREEN,	// show how to play and general info
 		START_WAVE,		// reset values as needed, start a new wave
 		PLAY_GAME,		// majority of gameplay here - input, collision, ai, etc
 		PLAYER_KILLED,	// after the player is killed, move here, check lives, respawn if possible
@@ -28,7 +29,7 @@ public:
 		GAME_OVER,		// display game over screen, return to main on key press
 		STATE_SIZE
 	};
-
+	// enum used for checking next stage, and loading enemies/visuals
 	enum STAGE
 	{
 		FIGHTERS_STAGE,	// approaching deathstar, dog fight with fighters
@@ -36,8 +37,24 @@ public:
 		TRENCH_STAGE,	// flying through trench towards exhaust port
 		STAGE_SIZE
 	};
-		
 	
+	// enum used by button array
+	enum BUTTONS
+	{
+		START_BUTTON,	// start game
+		HELP_BUTTON,	// help screen
+		QUIT_BUTTON,	// quit game
+		BUTTONS_SIZE
+	};
+	// used for menu buttons
+	struct Button 
+	{
+		int x;	
+		int y;	
+		int height;
+		int width;
+		char* text;
+	};
 	// set state of state machine
 	void SetState(GAMESTATE _newState) { gameState = _newState; }
 	GAMESTATE GetState() { return gameState; }	// get current state of state machine
@@ -51,13 +68,15 @@ public:
 	void SetupStage(STAGE _nextStage);
 	// increment game state
 	void Update();
+	// takes mouse value and performs action as dependent on game state
+	void MousePress(float _x, float _y);
 private:
+	// buttons for main menu, setup in constructor
+	Button buttons[BUTTONS_SIZE];
 	// draw text to screen
 	VisualText visText;
 	// integer array storing map boundaries for each stage
 	int stageBoundaries[STAGE_SIZE][2];
-	// check key flags for movement
-	void CheckFlags();
 	// current state of game logic
 	GAMESTATE gameState;
 	// the current stage the player is on
@@ -66,7 +85,12 @@ private:
 	ObjectFactory objectFactory;
 	// heads up display
 	HUD hud;
-
+	// check key flags for movement
+	void CheckFlags();
+	// setup button values
+	void SetupButtons();
+	// draw a button, as supplied with enum value
+	void DrawButton(BUTTONS _button);
 };
 
 #endif

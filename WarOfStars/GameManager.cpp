@@ -18,6 +18,29 @@ GameManager::GameManager()
 	stageBoundaries[SURFACE_STAGE][1] = 150;
 	stageBoundaries[TRENCH_STAGE][0] = 100;
 	stageBoundaries[TRENCH_STAGE][1] = 150;
+
+	SetupButtons();
+}
+// initial setup of buttons. should only be called once
+void GameManager::SetupButtons()
+{
+	buttons[START_BUTTON].height = 15;
+	buttons[START_BUTTON].width = 145;
+	buttons[START_BUTTON].x = 25;
+	buttons[START_BUTTON].y = 71;
+	buttons[START_BUTTON].text = "Assault the death star!";
+
+	buttons[HELP_BUTTON].height = 15;
+	buttons[HELP_BUTTON].width = 135;
+	buttons[HELP_BUTTON].x = 30;
+	buttons[HELP_BUTTON].y = 46;
+	buttons[HELP_BUTTON].text = "I need information...";
+
+	buttons[QUIT_BUTTON].height = 15;
+	buttons[QUIT_BUTTON].width = 45;
+	buttons[QUIT_BUTTON].x = 75;
+	buttons[QUIT_BUTTON].y = 22;
+	buttons[QUIT_BUTTON].text = "I quit";
 }
 // main draw statement here - switch based on gamestate and draw elements as needed
 void GameManager::DrawVisuals()
@@ -25,51 +48,30 @@ void GameManager::DrawVisuals()
 	CheckFlags();
 	switch(gameState)
 	{
-#pragma region MainMenuVisuals
 	case MAIN_MENU:
+		#pragma region MainMenuVisuals
 		glPushMatrix();
-			visText.SetColorFloatRGB(1.0, 0.0, 0.0);
-			visText.ReSizeFont(19);
-			visText.WriteBitmapString(6, 150, "War of Stars");
-			visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-			visText.WriteBitmapString(6, 148, "War of Stars");
-			visText.ReSizeFont(7);
-			visText.SetColorFloatRGB(0.8, 0.8, 0.8);
-			visText.WriteBitmapString(30, 75, "Assualt the death star!");
-			visText.WriteBitmapString(35, 50, "I need information...");
-			visText.WriteBitmapString(75, 25, "I quit");
-			visText.SetColorFloatRGB(1.0, 0.0, 0.0);
-			visText.WriteBitmapString(30, 74, "Assualt the death star!");
-			visText.WriteBitmapString(35, 49, "I need information...");
-			visText.WriteBitmapString(75, 24, "I quit");
-			glColor3f(0.0, 0.8, 0.1);
-			glLineWidth(2.0);
-			glBegin(GL_LINE_STRIP);
-			glVertex3f(25, 71, -4);
-			glVertex3f(170, 71, -4);
-			glVertex3f(170, 86, -4);
-			glVertex3f(25, 86, -4);
-			glVertex3f(25, 71, -4);
-			glEnd();
-			glBegin(GL_LINE_STRIP);
-			glVertex3f(25, 46, -4);
-			glVertex3f(170, 46, -4);
-			glVertex3f(170, 61, -4);
-			glVertex3f(25, 61, -4);
-			glVertex3f(25, 46, -4);
-			glEnd();
-			glBegin(GL_LINE_STRIP);
-			glVertex3f(70, 22, -4);
-			glVertex3f(115, 22, -4);
-			glVertex3f(115, 36, -4);
-			glVertex3f(70, 36, -4);
-			glVertex3f(70, 22, -4);
-			glEnd();
-			glLineWidth(1.0);
+		visText.SetColorFloatRGB(1.0, 0.0, 0.0);
+		visText.ReSizeFont(19);
+		visText.WriteBitmapString(6, 150, "War of Stars");
+		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
+		visText.WriteBitmapString(6, 148, "War of Stars");
+		visText.ReSizeFont(7);
+		// iterate through and draw all buttons
+		for (int i = 0; i < BUTTONS_SIZE; i++)
+		{
+			DrawButton((BUTTONS)i);
+		}
 		glPopMatrix();
+		#pragma endregion MainMenuVisuals
 		break;
-#pragma endregion MainMenuVisuals
 	case START_GAME:
+		break;
+	case HELP_SCREEN:
+#pragma region HelpScreenVisuals
+		glPushMatrix();
+
+#pragma endregion HelpScreenVisuals
 		break;
 	case START_WAVE:
 		hud.Draw();
@@ -157,6 +159,60 @@ void GameManager::SetupStage(STAGE _nextStage)
 void GameManager::Update()
 {
 	zTime += 0.01f;
+}
+// handle mouse input, based on gamestate enum
+void GameManager::MousePress(float _inX, float _inY)
+{
+	switch (gameState)
+	{
+	case MAIN_MENU:
+		// menu movement
+		for (int i = 0; i < BUTTONS_SIZE; i++)
+		{
+			if (_inX > buttons[(BUTTONS)i].x && _inX < buttons[(BUTTONS)i].x + buttons[(BUTTONS)i].width)
+				if (_inY > buttons[(BUTTONS)i].y && _inY < buttons[(BUTTONS)i].y + buttons[(BUTTONS)i].height)
+					switch(BUTTONS(i))
+					{
+					case START_BUTTON:
+						gameState = START_GAME;
+						break;
+					case HELP_BUTTON:
+						gameState = HELP_SCREEN;
+						break;
+					case QUIT_BUTTON:
+						exit(0);
+						break;
+					}
+		}
+		break;
+	case PLAY_GAME:
+		// fire a laser
+		break;
+	}
+}
+// draws a button to the screen - expects enum value to access button array
+void GameManager::DrawButton(BUTTONS _bval)
+{
+	// ensure value is within bounds of button array
+	if (_bval > BUTTONS_SIZE || _bval < 0)
+		return;
+
+	glPushMatrix();
+	visText.SetColorFloatRGB(0.8, 0.8, 0.8);
+	visText.WriteBitmapString(buttons[_bval].x + 5, buttons[_bval].y + 3, buttons[_bval].text);
+	visText.SetColorFloatRGB(1.0, 0.0, 0.0);
+	visText.WriteBitmapString(buttons[_bval].x + 5, buttons[_bval].y + 3, buttons[_bval].text);
+	glColor3f(0.0, 0.8, 0.1);
+	glLineWidth(2.0);
+	glBegin(GL_LINE_STRIP);
+	glVertex3f(buttons[_bval].x, buttons[_bval].y, -4);
+	glVertex3f(buttons[_bval].x + buttons[_bval].width, buttons[_bval].y, -4);
+	glVertex3f(buttons[_bval].x + buttons[_bval].width, buttons[_bval].y + buttons[_bval].height, -4);
+	glVertex3f(buttons[_bval].x, buttons[_bval].y + buttons[_bval].height, -4);
+	glVertex3f(buttons[_bval].x, buttons[_bval].y, -4);
+	glEnd();
+	glLineWidth(1.0);
+	glPopMatrix();
 }
 GameManager::~GameManager()
 {

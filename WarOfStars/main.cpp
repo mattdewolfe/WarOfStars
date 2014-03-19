@@ -15,7 +15,7 @@ static int width, height; // Size of the OpenGL window
 float mouseX, mouseY;
 
 static GameManager gameManager;
-TieFighter tie(25, 25, -50);
+TieFighter tie(0, 0, -5);
 // Routine to output interaction instructions to the C++ window.
 void printInteraction(void)
 {
@@ -39,15 +39,28 @@ void setup(void)
 void DrawCrossHair()
 {
 	glPushMatrix();
-		glColor3f(0.0, 0.3, 0.6);
+		glColor3f(0.8, 0.8, 0.0);
 		glTranslatef(mouseX, mouseY, -4.0f);
-		glBegin(GL_TRIANGLE_FAN);
-		glVertex3f(0, 0, 0);
-		glVertex3f(2, 2, 0);
-		glVertex3f(2, -2, 0);
-		glVertex3f(-2, -2, 0);
+		glBegin(GL_TRIANGLES);
+		// upper left crosshair arrow
+		glVertex3f(-3, 4, 0);
+		glVertex3f(-0.5, 0.5, 0);
+		glVertex3f(-4, 3, 0);
+		// bottom left crosshair arrow
+		glVertex3f(-3, -4, 0);
+		glVertex3f(-0.5, -0.5, 0);
+		glVertex3f(-4, -3, 0);
+		// upper right crosshair arrow
+		glVertex3f(3, 4, 0);
+		glVertex3f(0.5, 0.5, 0);
+		glVertex3f(4, 3, 0);
+		// bottom right crosshair arrow
+		glVertex3f(3, -4, 0);
+		glVertex3f(0.5, -0.5, 0);
+		glVertex3f(4, -3, 0);
+	/*	glVertex3f(-2, -2, 0);
 		glVertex3f(-2, 2, 0);
-		glVertex3f(2, 2, 0);
+		glVertex3f(2, 2, 0);*/
 		glEnd();
 	glPopMatrix();
 }
@@ -60,7 +73,7 @@ void drawScene(void)
 	glLoadIdentity();
 	gameManager.DrawVisuals();
 	DrawCrossHair();
-	gluLookAt(0, 0, 0, 0, 0, -50, 0, 1, 0);
+//	gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0);
 	
 	glPushMatrix();
 		glTranslatef(0, 0, gameManager.zTime);
@@ -76,7 +89,7 @@ void resize(int w, int h)
    glViewport (0, 0, (GLsizei)w, (GLsizei)h);
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glFrustum(0.0, 50.0, 0.0, 50.0, 1.0, 1000.0);
+   glFrustum(0.0, 50.0, 0.0, 50.0, 1.0, 300.0);
    glMatrixMode(GL_MODELVIEW);
 
    // Pass the size of the OpenGL window
@@ -86,24 +99,21 @@ void resize(int w, int h)
 // Mouse callback routine.
 void mouseControl(int button, int state, int x, int y)
 {
- /*  // Store the clicked point in the currentPoint variable when left button is pressed.
-   if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-   // Store the currentPoint in the points vector when left button is released.
-   if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
-   if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)*/
+	// if left button is released, pass values to gameManager to make use of
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+		gameManager.MousePress(x/5.15, 200 - y/3.84);
 }
-// Mouse motion callback routine
+// Mouse motion callback routine (for click and hold functionality)
 void mouseMotion(int x, int y)
 {
-//	std::cout << x/5.15 << "x " << y/3.84 << "y \n";
 }
 // Update mouse position regardless of button presses
 void passiveMotionFunc(int x, int y)
 {
 	std::cout << x/5.15 << "x " << y/3.84 << "y \n";
 	// convert mouse cursor position into screen coordinates
-	mouseX = x/5.15;
-	mouseY = y/3.84;
+	mouseX = x/5.14;
+	mouseY = 200 - y/3.84;
 }
 // Keyboard input processing routine
 void keyInput(unsigned char key, int x, int y)
