@@ -103,7 +103,6 @@ void mouseMotion(int x, int y)
 // Update mouse position regardless of button presses
 void passiveMotionFunc(int x, int y)
 {
-	std::cout << x/5.15 << "x " << y/3.84 << "y \n";
 	// convert mouse cursor position into screen coordinates
 	mouseX = x/3.84;
 	mouseY = 200 - y/3.84;

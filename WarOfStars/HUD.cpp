@@ -5,7 +5,7 @@ HUD::HUD(void)
 	hudFont = (long)GLUT_BITMAP_8_BY_13;
 	lasersShot = LASERFRAMES;
 }
-
+// general hud draw call
 void HUD::Draw()
 {
 	glPushMatrix();
@@ -13,7 +13,7 @@ void HUD::Draw()
 	DrawWeapons();
 	glPopMatrix();
 }
-
+// draw weapons to hud, and lasers if need be
 void HUD::DrawWeapons()
 {
 	glPushMatrix();
@@ -220,11 +220,11 @@ void HUD::DrawWeapons()
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				glColor3f(0.0, 0.2, 0.9);
-				glLineWidth(8.0);
-				glBegin(GL_LINE);
-					glVertex3f(14 + (i * 185), 98 - (j * 90), 0);
-					glVertex3f(14 + laserX + (i * 185), 98 + laserY - (j * 90), 0);
+				glColor3f(0.3, 0.3, 1.0);
+				glLineWidth(2.0);
+				glBegin(GL_LINES);
+					glVertex3f(10 + (i * 245), 98 - (j * 90), -1);
+					glVertex3f(laserX, laserY, -1);
 				glEnd();
 				glLineWidth(1.0);
 			}

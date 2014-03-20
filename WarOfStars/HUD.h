@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include "openGL\glut.h"
-#define LASERFRAMES 12
+#define LASERFRAMES 10
 class HUD
 {
 public:

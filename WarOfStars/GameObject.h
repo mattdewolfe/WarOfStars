@@ -10,7 +10,12 @@ public:
 	virtual char* GetType() const { return "GameObject"; }
 	virtual void Draw() {};
 	void IncreaseScale() 
-	{ scaleZ *= 1.01; }
+	{ 
+		if (scaleZ <=0)
+			scaleZ += 0.1;
+		else
+		scaleZ *= 1.01; 
+	}
 	float GetScale() { return scaleZ; }
 	void SetScale(float _val) { scaleZ = _val; }
 

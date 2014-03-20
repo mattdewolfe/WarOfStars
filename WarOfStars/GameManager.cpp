@@ -2,7 +2,7 @@
 
 GameManager::GameManager()
 {
-	gameState = PLAY_GAME;
+	gameState = MAIN_MENU;
 	stage = SURFACE_STAGE;
 	playerX = 0;
 	playerY = 0;
@@ -15,39 +15,38 @@ GameManager::GameManager()
 	stageBoundaries[FIGHTERS_STAGE][0] = 300;
 	stageBoundaries[FIGHTERS_STAGE][1] = 150;
 	stageBoundaries[SURFACE_STAGE][0] = 400;
-	stageBoundaries[SURFACE_STAGE][1] = 200;
-	stageBoundaries[TRENCH_STAGE][0] = 100;
-	stageBoundaries[TRENCH_STAGE][1] = 150;
-	fireDelay = 30;
+	stageBoundaries[SURFACE_STAGE][1] = 150;
+	stageBoundaries[TRENCH_STAGE][0] = 200;
+	stageBoundaries[TRENCH_STAGE][1] = 50;
+	fireDelay = 10;
 	lastShot = 0;
 	counter = 0;
 	SetupButtons();
-	objectFactory.SetupSurfaceStage();
 }
 // initial setup of buttons. should only be called once
 void GameManager::SetupButtons()
 {
 	buttons[START_BUTTON].height = 15;
 	buttons[START_BUTTON].width = 145;
-	buttons[START_BUTTON].x = 25;
+	buttons[START_BUTTON].x = 55;
 	buttons[START_BUTTON].y = 71;
 	buttons[START_BUTTON].text = "Assault the death star!";
 
 	buttons[HELP_BUTTON].height = 15;
 	buttons[HELP_BUTTON].width = 135;
-	buttons[HELP_BUTTON].x = 30;
+	buttons[HELP_BUTTON].x = 60;
 	buttons[HELP_BUTTON].y = 46;
 	buttons[HELP_BUTTON].text = "I need information...";
 
 	buttons[QUIT_BUTTON].height = 15;
 	buttons[QUIT_BUTTON].width = 45;
-	buttons[QUIT_BUTTON].x = 75;
+	buttons[QUIT_BUTTON].x = 105;
 	buttons[QUIT_BUTTON].y = 22;
 	buttons[QUIT_BUTTON].text = "I quit";
 
 	buttons[BACK_BUTTON].height = 15;
 	buttons[BACK_BUTTON].width = 35;
-	buttons[BACK_BUTTON].x = 80;
+	buttons[BACK_BUTTON].x = 110;
 	buttons[BACK_BUTTON].y = 10;
 	buttons[BACK_BUTTON].text = "back";
 }
@@ -62,9 +61,9 @@ void GameManager::DrawVisuals()
 		glPushMatrix();
 		visText.SetColorFloatRGB(1.0, 0.0, 0.0);
 		visText.ReSizeFont(19);
-		visText.WriteBitmapString(6, 150, "War of Stars");
+		visText.WriteBitmapString(36, 150, "War of Stars");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(6, 148, "War of Stars");
+		visText.WriteBitmapString(36, 148, "War of Stars");
 		visText.ReSizeFont(7);
 		// iterate through and draw all buttons
 		for (int i = 0; i < BUTTONS_SIZE - 1; i++)
@@ -81,36 +80,36 @@ void GameManager::DrawVisuals()
 		glPushMatrix();
 		visText.ReSizeFont(19);
 		visText.SetColorFloatRGB(1.0, 0.0, 0.0);
-		visText.WriteBitmapString(6, 150, "War of Stars");
+		visText.WriteBitmapString(36, 150, "War of Stars");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(6, 148, "War of Stars");
+		visText.WriteBitmapString(36, 148, "War of Stars");
 		visText.ReSizeFont(8);
 		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
-		visText.WriteBitmapString(33, 110, "Use the mouse to aim");
+		visText.WriteBitmapString(63, 110, "Use the mouse to aim");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(33, 109, "Use the mouse to aim");
+		visText.WriteBitmapString(63, 109, "Use the mouse to aim");
 		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
-		visText.WriteBitmapString(24, 97, "and left click to fire");
+		visText.WriteBitmapString(54, 97, "and left click to fire");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(24, 96, "and left click to fire");
+		visText.WriteBitmapString(54, 96, "and left click to fire");
 
 		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
-		visText.WriteBitmapString(10, 84, "Use the arrows to manuever!");
+		visText.WriteBitmapString(40, 84, "Use the arrows to manuever!");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(10, 83, "Use the arrows to manuever!");
+		visText.WriteBitmapString(40, 83, "Use the arrows to manuever!");
 		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
-		visText.WriteBitmapString(25, 65, "Fly across the surface");
+		visText.WriteBitmapString(55, 65, "Fly across the surface");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(25, 64, "Fly across the surface");
+		visText.WriteBitmapString(55, 64, "Fly across the surface");
 
 		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
-		visText.WriteBitmapString(25, 53, "and through the trench");
+		visText.WriteBitmapString(55, 53, "and through the trench");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(25, 52, "and through the trench");
+		visText.WriteBitmapString(55, 52, "and through the trench");
 		visText.SetColorFloatRGB(0.0, 1.0, 0.0);
-		visText.WriteBitmapString(10, 41, "to destroy the exhaust port");
+		visText.WriteBitmapString(40, 41, "to destroy the exhaust port");
 		visText.SetColorFloatRGB(1.0, 1.0, 1.0);
-		visText.WriteBitmapString(10, 40, "to destroy the exhaust port");
+		visText.WriteBitmapString(40, 40, "to destroy the exhaust port");
 
 		DrawButton(BACK_BUTTON);
 		glPopMatrix();
@@ -121,8 +120,11 @@ void GameManager::DrawVisuals()
 		break;
 	case PLAY_GAME:
 		hud.Draw();
-		glPushMatrix();	
+		glPushMatrix();
+			objectFactory.DrawTerrain((int)stage);
 			glTranslatef(playerX, playerY, -1);
+		if (stage != TRENCH_STAGE)
+			objectFactory.DrawTerrain((int)stage);
 			objectFactory.DrawAll();
 		glPopMatrix();
 		break;
@@ -144,8 +146,8 @@ bool GameManager::IsWaveOver()
 	// if player just completed trench stage, reset to fighters stage and return true as the wave is over
 	if (stage == TRENCH_STAGE)
 	{
-		gameState = WAVE_OVER;
-		stage = FIGHTERS_STAGE;
+	//	gameState = WAVE_OVER;
+		stage = SURFACE_STAGE;
 		return true;
 	}
 	// if the player just beat the fighters, move to surface stage and return false
@@ -188,22 +190,40 @@ void GameManager::SetupStage(STAGE _nextStage)
 	switch (_nextStage)
 	{
 	case FIGHTERS_STAGE:
-		// objectFactory.SetupFighterStage();
+		objectFactory.SetupFighterStage();
 		break;
 	case SURFACE_STAGE:
-		// objectFactory.SetupSurfaceStage();
+		objectFactory.SetupSurfaceStage();
 		break;
 	case TRENCH_STAGE:
-		// objectFactory.SetupTrenchStage();
+		objectFactory.SetupTrenchStage();
 		break;
 	}
+	playerX = 100;
+	playerY = 50;
 }
 // increments game logic/state
 void GameManager::Update()
 {
-	counter++;
-	objectFactory.Update();
-	CheckFlags();
+	switch (gameState)
+	{
+	case START_GAME:
+		SetupStage(stage);
+		gameState = PLAY_GAME;
+		break;
+	case PLAY_GAME:
+		counter++;
+		objectFactory.Update();
+		CheckFlags();
+		break;
+	}
+	zTime++;
+	if (zTime > 450)
+	{
+		IsWaveOver();
+		gameState = START_GAME;
+		zTime = 0;
+	}
 }
 // handle mouse input, based on gamestate enum
 void GameManager::MousePress(float _inX, float _inY)
@@ -272,7 +292,6 @@ void GameManager::DrawButton(BUTTONS _bval)
 }
 GameManager::~GameManager()
 {
-
 }
 
 

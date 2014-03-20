@@ -1,11 +1,9 @@
 #include "Tower.h"
 
-
 Tower::Tower(float x, float y, float z) : VisualObject(x, y, z) 
 {
 	turretAlive = true;
 }
-
 void Tower::Draw()
 {
 	// store the interior values for connection lines between cubes
@@ -14,7 +12,7 @@ void Tower::Draw()
 	innerSmall = scaleZ/3;
 	glColor3f(1.0, 0.1, 0.1);
 	glPushMatrix();
-	glTranslatef(posX - scaleZ, posY - scaleZ*2, 0);
+	glTranslatef(posX + scaleZ, posY - scaleZ*2, 0);
 	glBegin(GL_LINE_STRIP);
 		glVertex3f(-innerLarge, 0, 0);
 		glVertex3f(innerLarge, 0, 0);
@@ -77,7 +75,6 @@ void Tower::Draw()
 	}
 	glPopMatrix();
 }
-
 Tower::~Tower(void)
 {
 }
