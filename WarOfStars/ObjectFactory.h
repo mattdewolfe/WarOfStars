@@ -3,37 +3,72 @@
 #include <vector>
 #include "openGL\glut.h"
 #include "GameObject.h"
+#include "VisualObject.h"
 
 // #include "TieFighter.h"
 // #include "Tower.h"
 class ObjectFactory
 {
 private:
-	std::vector<GameObject> objects;
+	GameObject *objects[20];
+	int toDestroy;
+	int objectSize;
 
 public:
-	ObjectFactory(void) {}
-	// add an object to the list
-	void AddObject(GameObject _newObject)
+	ObjectFactory() 
 	{
-		objects.push_back(_newObject);
+		toDestroy = -1;
+		objectSize = 0;
+	}
+	// add an object to the list
+	void AddObject(GameObject *_newObject)
+	{
+		objects[objectSize] = _newObject;
+		objectSize++;
 	}
 	// draw all objects
 	void DrawAll()
 	{
-		for (std::vector<GameObject>::iterator it = objects.begin(); it != objects.end(); it++)
+		for (int i = 0; i < objectSize; i++)
 		{
-			it->Draw();
+			if (objects[i] != nullptr)
+				objects[i]->Draw();
 		}
-		glColor3f(0.8, 0.0, 0.0);
-		glBegin(GL_TRIANGLE_STRIP);
-			glVertex3f(5.0, 5.0, -4);
-			glVertex3f(10.0, 5.0, -4);
-			glVertex3f(5.0, 10.0, -4);
-		glEnd();
+	}
+	void Update()
+	{
+		for (int i = 0; i < objectSize; i++)
+		{
+			if (objects[i] != nullptr)
+			{
+				objects[i]->IncreaseScale();
+				if (objects[i]->GetScale() > 8)
+				{
+					DestroyAndRepack(i);
+				}
+			}
+		}
+	}
+	// destroy target object and repacj array
+	void DestroyAndRepack(int _index)
+	{
+		GameObject *backup[20];
+		for (int i = _index; i < objectSize; i++)
+		{
+			backup[i] = objects[i];
+		}
+		for (int i = _index; i < objectSize; i++)
+		{
+			if (backup[i + 1] == nullptr)
+				break;
+			else
+				objects[i] = backup[i + 1];
+		}
+		objects[objectSize] = nullptr;
+		objectSize--;
 	}
 	// remove an object
-	void RemoveObject(GameObject _deleteObject)
+/*	void RemoveObject(GameObject _deleteObject)
 	{
 		int i;
 		for (i = 0; i < objects.size(); i++)
@@ -42,7 +77,8 @@ public:
 				break;
 		}
 		objects.erase(objects.begin() + i);
-	}
+		objectSize--;
+	}*/
 	// load objects for fighter stage
 	void SetupFighterStage()
 	{

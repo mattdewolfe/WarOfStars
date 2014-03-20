@@ -84,7 +84,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StaticObject.cpp" />
-    <ClCompile Include="TieFighter.cpp" />
+    <ClCompile Include="VisualObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSingleton.h" />
@@ -95,7 +95,7 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="StaticObject.h" />
-    <ClInclude Include="TieFighter.h" />
+    <ClInclude Include="VisualObject.h" />
     <ClInclude Include="VisualText.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "GameLogic.h"
-#include "TieFighter.h"
+#include "VisualObject.h"
 #include "openGL/glut.h"
 
 #define PI 3.14159265
@@ -15,7 +15,7 @@ static int width, height; // Size of the OpenGL window
 float mouseX, mouseY;
 
 static GameManager gameManager;
-TieFighter tie(5, 5, -5);
+
 // Routine to output interaction instructions to the C++ window.
 void printInteraction(void)
 {
@@ -40,7 +40,7 @@ void DrawCrossHair()
 {
 	glPushMatrix();
 		glColor3f(0.8, 0.8, 0.0);
-		glTranslatef(mouseX, mouseY, -4.0f);
+		glTranslatef(mouseX, mouseY, -1.0f);
 		glBegin(GL_TRIANGLES);
 		// upper left crosshair arrow
 		glVertex3f(-3, 4, 0);
@@ -71,16 +71,8 @@ void drawScene(void)
 	int i, j;
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gameManager.DrawVisuals();
 	DrawCrossHair();
-	glRotatef(90, 0, 1, 0);
-	//	gluLookAt(0, 0, 0, 0, 0, -1, 0, 1, 0);
-	
-	glPushMatrix();
-		
-		glTranslatef(0, 0, gameManager.zTime);
-		tie.Draw();
-	glPopMatrix();
+	gameManager.DrawVisuals();
 	gameManager.Update();
 	glutSwapBuffers();
 }
@@ -91,9 +83,8 @@ void resize(int w, int h)
    glViewport (0, 0, (GLsizei)w, (GLsizei)h);
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glFrustum(0.0, 50.0, 0.0, 50.0, 1.0, 300.0);
+   glOrtho(0.0, 266.0, 0.0, 200.0, 1.0, 300.0);
    glMatrixMode(GL_MODELVIEW);
-
    // Pass the size of the OpenGL window
    width = w;
    height = h;
@@ -103,7 +94,7 @@ void mouseControl(int button, int state, int x, int y)
 {
 	// if left button is released, pass values to gameManager to make use of
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
-		gameManager.MousePress(x/5.15, 200 - y/3.84);
+		gameManager.MousePress(x/3.84, 200 - y/3.84);
 }
 // Mouse motion callback routine (for click and hold functionality)
 void mouseMotion(int x, int y)
@@ -114,7 +105,7 @@ void passiveMotionFunc(int x, int y)
 {
 	std::cout << x/5.15 << "x " << y/3.84 << "y \n";
 	// convert mouse cursor position into screen coordinates
-	mouseX = x/5.14;
+	mouseX = x/3.84;
 	mouseY = 200 - y/3.84;
 }
 // Keyboard input processing routine

@@ -18,7 +18,8 @@ GameManager::GameManager()
 	stageBoundaries[SURFACE_STAGE][1] = 150;
 	stageBoundaries[TRENCH_STAGE][0] = 100;
 	stageBoundaries[TRENCH_STAGE][1] = 150;
-
+	objectFactory.AddObject(new VisualObject(50, 50, 2));
+	objectFactory.AddObject(new VisualObject(25, 25, 1));
 	SetupButtons();
 }
 // initial setup of buttons. should only be called once
@@ -119,7 +120,7 @@ void GameManager::DrawVisuals()
 	case PLAY_GAME:
 		hud.Draw();
 		glPushMatrix();	
-			glTranslatef(playerX, playerY, zTime);
+			glTranslatef(playerX, playerY, -1);
 			objectFactory.DrawAll();
 		glPopMatrix();
 		break;
@@ -162,21 +163,21 @@ bool GameManager::IsWaveOver()
 // check movement flags and change values as needed
 void GameManager::CheckFlags()
 {
-	if (moveLeft == true && playerX > 0)
-	{
-		playerX -= 1.0f;
-	}
-	if (moveRight == true && playerX < stageBoundaries[stage][0])
+	if (moveLeft == true && playerX < stageBoundaries[stage][0])
 	{
 		playerX += 1.0f;
 	}
-	if (moveDown == true && playerY > 0)
+	if (moveRight == true && playerX > 1)
 	{
-		playerY -= 1.0f;
+		playerX -= 1.0f;
 	}
-	if (moveUp == true && playerY < stageBoundaries[stage][0])
+	if (moveDown == true && playerY < stageBoundaries[stage][1])
 	{
 		playerY += 1.0f;
+	}
+	if (moveUp == true && playerY > 1)
+	{
+		playerY -= 1.0f;
 	}
 }
 // tell object factory to setup next stage
@@ -198,7 +199,8 @@ void GameManager::SetupStage(STAGE _nextStage)
 // increments game logic/state
 void GameManager::Update()
 {
-	zTime += 0.01f;
+	objectFactory.Update();
+	CheckFlags();
 }
 // handle mouse input, based on gamestate enum
 void GameManager::MousePress(float _inX, float _inY)

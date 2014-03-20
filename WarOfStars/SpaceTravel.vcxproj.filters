@@ -30,7 +30,7 @@
     <ClCompile Include="StaticObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TieFighter.cpp">
+    <ClCompile Include="VisualObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,13 +56,13 @@
     <ClInclude Include="StaticObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TieFighter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Score.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VisualText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
