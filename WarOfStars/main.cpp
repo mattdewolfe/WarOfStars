@@ -12,7 +12,7 @@
 static int animationPeriod = 33; // Time between draw calls
 static long font = (long)GLUT_BITMAP_8_BY_13; // Font selection
 static int width, height; // Size of the OpenGL window
-float mouseX, mouseY;
+static float mouseX, mouseY;
 
 static GameManager gameManager;
 

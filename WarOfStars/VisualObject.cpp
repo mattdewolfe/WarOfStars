@@ -12,7 +12,7 @@ void VisualObject::Draw()
 	glPushMatrix();
 	glTranslatef(posX, posY, 0);
 	glColor3f(0.0, 1.0, 0.0);
-	glutWireCube(GetScale());
+	glutWireCube(scaleZ);
 	glPopMatrix();
 }
 

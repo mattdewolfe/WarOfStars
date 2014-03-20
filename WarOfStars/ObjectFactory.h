@@ -4,25 +4,25 @@
 #include "openGL\glut.h"
 #include "GameObject.h"
 #include "VisualObject.h"
+#include "Tower.h"
 
 // #include "TieFighter.h"
-// #include "Tower.h"
 class ObjectFactory
 {
 private:
 	GameObject *objects[20];
-	int toDestroy;
 	int objectSize;
 
 public:
 	ObjectFactory() 
 	{
-		toDestroy = -1;
 		objectSize = 0;
 	}
 	// add an object to the list
 	void AddObject(GameObject *_newObject)
 	{
+		if (objectSize == -1)
+			objectSize = 0;
 		objects[objectSize] = _newObject;
 		objectSize++;
 	}
@@ -31,7 +31,7 @@ public:
 	{
 		for (int i = 0; i < objectSize; i++)
 		{
-			if (objects[i] != nullptr)
+			if (objects[i] != nullptr && objects[i]->GetScale() > 0)
 				objects[i]->Draw();
 		}
 	}
@@ -42,14 +42,14 @@ public:
 			if (objects[i] != nullptr)
 			{
 				objects[i]->IncreaseScale();
-				if (objects[i]->GetScale() > 8)
+				if (objects[i]->GetScale() > 30)
 				{
 					DestroyAndRepack(i);
 				}
 			}
 		}
 	}
-	// destroy target object and repacj array
+	// destroy target object and repack array
 	void DestroyAndRepack(int _index)
 	{
 		GameObject *backup[20];
@@ -67,18 +67,6 @@ public:
 		objects[objectSize] = nullptr;
 		objectSize--;
 	}
-	// remove an object
-/*	void RemoveObject(GameObject _deleteObject)
-	{
-		int i;
-		for (i = 0; i < objects.size(); i++)
-		{
-			if (_deleteObject.GetID() == objects[i].GetID())
-				break;
-		}
-		objects.erase(objects.begin() + i);
-		objectSize--;
-	}*/
 	// load objects for fighter stage
 	void SetupFighterStage()
 	{
@@ -87,12 +75,19 @@ public:
 	// load objects for surface stage
 	void SetupSurfaceStage()
 	{
-
+		AddObject(new Tower(0, 0, 1));
+		AddObject(new Tower(40, 0, 2));
+		AddObject(new Tower(60, 0, 3));
+		AddObject(new Tower(80, 0, 6));
+		AddObject(new Tower(110, 0, 3));
+		AddObject(new Tower(130, 0, 5));
+		AddObject(new Tower(150, 0, 1));
+		AddObject(new Tower(170, 0, 5));
 	}
 	// load objects for trench stage
 	void SetupTrenchStage()
 	{
-
+		
 	}
 	virtual ~ObjectFactory(void) {}
 

@@ -3,6 +3,7 @@
 HUD::HUD(void)
 {
 	hudFont = (long)GLUT_BITMAP_8_BY_13;
+	lasersShot = LASERFRAMES;
 }
 
 void HUD::Draw()
@@ -211,8 +212,26 @@ void HUD::DrawWeapons()
 			glVertex3f(198.0, -1.0, 0);
 		glEnd();
 #pragma endregion LowerRightLaser
-
 	glPopMatrix();
+#pragma region LaserVisuals
+	if (lasersShot < LASERFRAMES)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				glColor3f(0.0, 0.2, 0.9);
+				glLineWidth(8.0);
+				glBegin(GL_LINE);
+					glVertex3f(14 + (i * 185), 98 - (j * 90), 0);
+					glVertex3f(14 + laserX + (i * 185), 98 + laserY - (j * 90), 0);
+				glEnd();
+				glLineWidth(1.0);
+			}
+		}
+		lasersShot++;
+	}
+#pragma endregion LaserVisuals
 }
 // routine to draw a bitmap character string
 void HUD::WriteBitmapString(void *font, char *string)
@@ -240,6 +259,13 @@ void HUD::WriteData()
 	WriteBitmapString((void*)hudFont, "SHIELD ");
 	glRasterPos3f(GLUT_SCREEN_WIDTH + 25 , 192.0f, -1.0f);
 	WriteBitmapString((void*)hudFont, "WAVE ");
+}
+// change values for laser firing
+void HUD::FireLaser(float x, float y)
+{
+	laserX = x;
+	laserY = y;
+	lasersShot = 0;
 }
 HUD::~HUD(void)
 {

@@ -14,13 +14,15 @@ GameManager::GameManager()
 	fireWeapon = false;
 	stageBoundaries[FIGHTERS_STAGE][0] = 300;
 	stageBoundaries[FIGHTERS_STAGE][1] = 150;
-	stageBoundaries[SURFACE_STAGE][0] = 200;
-	stageBoundaries[SURFACE_STAGE][1] = 150;
+	stageBoundaries[SURFACE_STAGE][0] = 400;
+	stageBoundaries[SURFACE_STAGE][1] = 200;
 	stageBoundaries[TRENCH_STAGE][0] = 100;
 	stageBoundaries[TRENCH_STAGE][1] = 150;
-	objectFactory.AddObject(new VisualObject(50, 50, 2));
-	objectFactory.AddObject(new VisualObject(25, 25, 1));
+	fireDelay = 30;
+	lastShot = 0;
+	counter = 0;
 	SetupButtons();
+	objectFactory.SetupSurfaceStage();
 }
 // initial setup of buttons. should only be called once
 void GameManager::SetupButtons()
@@ -199,6 +201,7 @@ void GameManager::SetupStage(STAGE _nextStage)
 // increments game logic/state
 void GameManager::Update()
 {
+	counter++;
 	objectFactory.Update();
 	CheckFlags();
 }
@@ -233,7 +236,13 @@ void GameManager::MousePress(float _inX, float _inY)
 					gameState = MAIN_MENU;
 		break;
 	case PLAY_GAME:
-		// fire a laser
+		if (lastShot + fireDelay < counter)
+		{
+			hud.FireLaser(_inX, _inY);
+			// check hit detection
+			lastShot = counter;
+		}
+		
 		break;
 	}
 }

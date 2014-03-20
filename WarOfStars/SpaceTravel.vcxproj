@@ -83,7 +83,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="StaticObject.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Tower.cpp" />
     <ClCompile Include="VisualObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +95,8 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="Score.h" />
-    <ClInclude Include="StaticObject.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Tower.h" />
     <ClInclude Include="VisualObject.h" />
     <ClInclude Include="VisualText.h" />
   </ItemGroup>

@@ -4,6 +4,5 @@
 // game manager should bring with it Score, Hud, ObjectFactory, and VisualText
 #include "GameManager.h"
 #include "GameObject.h"
-#include "StaticObject.h"
 
 #endif

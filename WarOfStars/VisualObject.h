@@ -4,8 +4,7 @@
 #include "GameObject.h"
 #include "openGL\glut.h"
 
-class VisualObject :
-	public GameObject
+class VisualObject : public GameObject
 {
 public:
 	VisualObject(float x, float y, float z);
@@ -19,7 +18,7 @@ public:
 	float SetX(float _x) { posX = _x; }
 	float SetY(float _y) { posY = _y; }
 	
-private:
+protected:
 	float posX, posY;
 
 };

@@ -72,6 +72,8 @@ public:
 	// takes mouse value and performs action as dependent on game state
 	void MousePress(float _x, float _y);
 private:
+	// variables to track when the player can shoot next
+	int lastShot, fireDelay, counter;
 	// buttons for main menu, setup in constructor
 	Button buttons[BUTTONS_SIZE];
 	// draw text to screen
